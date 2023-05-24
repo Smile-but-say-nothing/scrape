@@ -1,0 +1,53 @@
+---
+# MODEL
+# feature_extractor: [resnet101, ViT]
+feature_extractor: resnet101
+caption_model: NIC
+multi_task: True
+use_rl: False
+wand_id: test0
+resume_last: False
+pretrained: True
+finetune: True
+group: False
+# DATASET SETTING
+json_root: ./dataset_sha.json
+clean: True
+freq_threshold: 5
+segmented: False
+captions_per_image: 1
+# BASIC TRAINING SETTING
+dataset_path: ./Sha
+extractor_lr: 1e-5
+caption_lr: 1e-4
+end_epoch: 1
+batch_size: 3
+weight_decay: 1e-4
+device: cuda:0
+seed: 42
+num_workers: 2
+# NIC model
+NIC:
+  embed_size: 2048
+  hidden_size: 2048
+  num_layers: 3
+  unit: gru
+# SoftAttention
+SoftAttention:
+  embed_size: 2048
+  hidden_size: 2048
+  
+# Transformer model
+Transformer:
+  pad_idx: 0 # idx of padding
+  embedding_size: 2048 # size of embedding layers, equals to d_model
+  d_model: 2048 # output dimension of all sub-layers
+  d_ff: 1024 # inner hidden size of feed-forward networks
+  n_layer: 3 # layer numbers of encoders and decoders
+  n_head: 8 # head numbers of multi-head attention
+  d_k: 128 # dimension of vector key, equals to d_model / n_head
+  d_v: 128 # dimension of vector value, equals to d_model / n_head
+  dropout: 0.1 # dropout prob after each sub-layer, before the sum of embedding and PE
+  linear_and_embedding_weight_sharing: False # 'weight sharing between linear transformation and decoder embedding layers
+  scale_embedding: False # whether embedding divided by d_model ** 0.5
+
